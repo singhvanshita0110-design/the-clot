@@ -99,6 +99,20 @@ def create_appointment():
         "service": new_appointment.service,
         "status": new_appointment.status
     }), 201
+@app.route("/api/appointments", methods=["GET"])
+def get_appointments():
+    appointments = Appointment.query.all()
+    result = []
+    for a in appointments:
+        result.append({
+            "id": a.id,
+            "client_id": a.client_id,
+            "date": str(a.date),
+            "time_slot": a.time_slot,
+            "service": a.service,
+            "status": a.status
+        })
+    return jsonify(result)
 
 if __name__ == "__main__":
     with app.app_context():
